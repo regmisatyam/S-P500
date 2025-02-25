@@ -65,15 +65,27 @@ test_predict = scaler.inverse_transform(test_predict)
 y_test = scaler.inverse_transform([y_test])
 
 # Visualize results
-plt.figure(figsize=(16,8))
-plt.plot(df.index[sequence_length:], y_train[0], label='Actual')
-plt.plot(df.index[sequence_length:train_size], train_predict, label='Train Predict')
-plt.plot(df.index[train_size+sequence_length:], test_predict, label='Test Predict')
+plt.figure(figsize=(16, 8))
+
+# Plot actual prices
+actual_prices = np.concatenate([y_train[0], y_test[0]])  # Combining train and test actual values
+actual_index = df.index[sequence_length:sequence_length+len(actual_prices)]  # Matching index length
+plt.plot(actual_index, actual_prices, label='Actual')
+
+# Plot train predictions
+train_index = df.index[sequence_length:sequence_length+len(train_predict)]  # Match train predictions length
+plt.plot(train_index, train_predict, label='Train Predict')
+
+# Plot test predictions
+test_index = df.index[train_size+sequence_length:train_size+sequence_length+len(test_predict)]  # Match test predictions length
+plt.plot(test_index, test_predict, label='Test Predict')
+
 plt.legend()
 plt.title('S&P 500 Stock Price Prediction')
 plt.xlabel('Date')
 plt.ylabel('Close Price')
 plt.show()
+
 
 # Calculate RMSE
 train_rmse = np.sqrt(np.mean((train_predict - y_train[0])**2))
