@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # Loading and preprocessing data:
 df = pd.read_csv('sp500_data.csv', skiprows=3, header=None)
-df.columns = ['Date', 'Close', 'Adj Close', 'High', 'Low', 'Open', 'Volume']
+df.columns = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
 
 # Parse 'Date' and set it as index
 df['Date'] = pd.to_datetime(df['Date'])
